@@ -32,3 +32,9 @@ ORDER BY score DESC
 SELECT *
   FROM Player, PlayerGame, Game
   ;
+
+-- Join query of my choice over atleast two of the tables in that database (read-only)
+SELECT Game.ID, Game.time, Player.ID, Player.email, Player.name
+  FROM Game
+INNER JOIN Player
+  ON Game.ID = Player.ID;

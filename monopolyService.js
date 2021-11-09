@@ -152,7 +152,7 @@ function updateGame(req, res, next) {
         });
 }
 
-function createPlayer(req, res, next) {
+function createGame(req, res, next) {
     db.one('INSERT INTO Game(email, name) VALUES (${email}, ${name}) RETURNING id', req.body)
         .then(data => {
             res.send(data);
@@ -162,7 +162,7 @@ function createPlayer(req, res, next) {
         });
 }
 
-function deletePlayer(req, res, next) {
+function deleteGame(req, res, next) {
     db.oneOrNone('DELETE FROM Game WHERE id=${id} RETURNING id', req.params)
         .then(data => {
             returnDataOr404(res, data);

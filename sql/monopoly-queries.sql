@@ -34,7 +34,9 @@ SELECT *
   ;
 
 -- Join query of my choice over atleast two of the tables in that database (read-only)
-SELECT Game.ID, Game.time, Player.ID, Player.email, Player.name
-  FROM Game
-INNER JOIN Player
-  ON Game.ID = Player.ID;
+SELECT Player.name, score 
+  FROM Player, PlayerGame, Game 
+WHERE Player.ID = PlayerGame.playerID 
+  AND PlayerGame.gameID = Game.ID 
+  AND Game.ID = 2
+  ;

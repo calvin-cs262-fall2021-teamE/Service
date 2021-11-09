@@ -42,6 +42,11 @@ router.get("/players/:id", readPlayer);
 router.put("/players/:id", updatePlayer);
 router.post('/players', createPlayer);
 router.delete('/players/:id', deletePlayer);
+router.get("/games", readGames);
+router.get("/games/:id", readGame);
+router.put("/games/:id", updateGame);
+router.post('/games', createGame);
+router.delete('/games/:id', deleteGame);
 
 app.use(router);
 app.use(errorHandler);
@@ -110,6 +115,55 @@ function createPlayer(req, res, next) {
 
 function deletePlayer(req, res, next) {
     db.oneOrNone('DELETE FROM Player WHERE id=${id} RETURNING id', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+function readGames(req, res, next) {
+    db.many("SELECT * FROM Game")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+function readGame(req, res, next) {
+    db.oneOrNone('SELECT * FROM Game WHERE id=${id}', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function updateGame(req, res, next) {
+    db.oneOrNone('UPDATE Game SET email=${body.email}, name=${body.name} WHERE id=${params.id} RETURNING id', req)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function createPlayer(req, res, next) {
+    db.one('INSERT INTO Game(email, name) VALUES (${email}, ${name}) RETURNING id', req.body)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function deletePlayer(req, res, next) {
+    db.oneOrNone('DELETE FROM Game WHERE id=${id} RETURNING id', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })

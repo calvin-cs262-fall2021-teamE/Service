@@ -1,6 +1,4 @@
-This is based on https://cs.calvin.edu/courses/cs/262/kvlinden/09is/homework.html
-
-This is the data service fo the Monoloply application with updated join query and updated client for the mobile application to read that data.
+This repository contains the upgraded Monopoly data service used in Homework 3.
 
 
 a.

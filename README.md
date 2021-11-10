@@ -2,9 +2,9 @@ This repository contains the upgraded Monopoly data service used in Homework 3.
 
 
  * a.
- * https://cs262-monopoly.herokuapp.com/playerScore
- * https://cs262-monopoly.herokuapp.com/players
- * https://cs262-monopoly.herokuapp.com/games
+  * https://cs262-monopoly.herokuapp.com/playerScore
+  * https://cs262-monopoly.herokuapp.com/players
+  * https://cs262-monopoly.herokuapp.com/games
 
 
 * b. The /playerScore URL can only be used to implement nullipotent actions. The /players and /games URLs can be used to implement nullipotent and itempotent actions.

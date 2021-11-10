@@ -4,14 +4,13 @@ This is the data service fo the Monoloply application with updated join query an
 
 
 a.
-   https://cs262-monopoly.herokuapp.com/Players
-   https://cs262-monopoly.herokuapp.com/players/:id
-   https://cs262-monopoly.herokuapp.com/players/owen
-   https://cs262-monopoly.herokuapp.com/
+   https://cs262-monopoly.herokuapp.com/playerScore
+   https://cs262-monopoly.herokuapp.com/players
+   https://cs262-monopoly.herokuapp.com/games
 
 
-b. The routers that use put and delete are idempotent. The ones that use get are nullipotent and the ones that use post are neither.
+b. The /playerScore URL can only be used to implement nullipotent actions. The /players and /games URLs can be used to implement nullipotent and itempotent actions.
 
-c. Yes, because it is based on HTTP methods to access data using GET, POST, PUT and DELETE. It is a stateless and client-server application. It separates the UI from the server system.
+c. This is a RESTful data service because it is based on HTTP methods to access data using GET, POST, PUT and DELETE. It is a stateless and client-server application. It separates the UI from the server system.
 
-d. Yes!
+d. There is no evidence of impedance mismatch in our implementation.

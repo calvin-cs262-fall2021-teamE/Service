@@ -12,4 +12,4 @@
 
 * c. This is a RESTful data service because it is based on HTTP methods to access data using GET, POST, PUT and DELETE. It is a stateless and client-server application. It separates the UI from the server system.
 
-* d. There is no evidence of impedance mismatch in our implementation.
+* d. There is impedance mismatch in our implementation.

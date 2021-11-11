@@ -1,7 +1,8 @@
-This repository contains the upgraded Monopoly data service used in Homework 3.
+# This repository contains the upgraded Monopoly data service used in Homework 3.
 
+## Answers to the Questions:
 
- * a.
+ * a. Active URLs:
    * https://cs262-monopoly.herokuapp.com/playerScore
    * https://cs262-monopoly.herokuapp.com/players
    * https://cs262-monopoly.herokuapp.com/games

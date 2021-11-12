@@ -306,7 +306,7 @@ function deleteVisit(req, res, next) {
 }
 
 function readPatientVisits(req, res, next) {
-    db.many('SELECT * FROM Visit WHERE patient=${patient} RETURNING id', req.params)
+    db.many('SELECT * FROM Visit WHERE patient=${patient}', req.params)
     .then(data => {
         returnDataOr404(res, data);
     })

@@ -64,6 +64,7 @@ router.get("/visit/:id", readVisit);
 router.put("/visit/:id", updateVisit);
 router.post('/visits', createVisit);
 router.delete('/visits/:id', deleteVisit);
+router.get("/visits/:patient", readPatientVisits);
 
 
 // app.use
@@ -304,3 +305,12 @@ function deleteVisit(req, res, next) {
         });
 }
 
+function readPatientVisits(req, res, next) {
+    db.many('SELECT * FROM Visit WHERE patient=${patient} RETURNING id', req.params)
+    .then(data => {
+        returnDataOr404(res, data);
+    })
+        .catch(err => {
+            next(err);
+        });
+}

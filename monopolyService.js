@@ -37,6 +37,9 @@ const router = express.Router();
 router.use(express.json());
 
 router.get("/", readHelloMessage);
+
+// Monopoly Service Routers
+
 router.get("/players", readPlayers);
 router.get("/players/:id", readPlayer);
 router.get("/playerScores", readPlayerScore);
@@ -49,11 +52,19 @@ router.put("/games/:id", updateGame);
 router.post('/games', createGame);
 router.delete('/games/:id', deleteGame);
 
+// OPUS Service Routers
+
+router.get("/patients", readPatients);
+router.get("/patient/:registrationNumber", readPatient);
+router.put("/patient/:registrationNumber", updatePatient);
+router.post('/patients', createPatient);
+router.delete('/patients/:registrationNumber', deletePatient);
+
 app.use(router);
 app.use(errorHandler);
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-// Implement the CRUD operations.
+// Implement the CRUD operations for the Monopoly Service.
 
 function errorHandler(err, req, res) {
     if (app.get('env') === "development") {
@@ -175,6 +186,58 @@ function createGame(req, res, next) {
 
 function deleteGame(req, res, next) {
     db.oneOrNone('DELETE FROM Game WHERE id=${id} RETURNING id', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+// Implement the CRUD operations for OPUS Service
+
+function readPatients(req, res, next) {
+    db.many("SELECT * FROM Patient")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+function readPatient(req, res, next) {
+    db.oneOrNone('SELECT * FROM Patient WHERE registrationNumber=${registrationNumber}', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function updatePatient(req, res, next) {
+    db.oneOrNone('UPDATE Patient SET registrationNumber=${body.registrationNumber}, name=${body.name} WHERE registrationNumber=${params.registrationNumber} RETURNING registrationNumber', req)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function createPatient(req, res, next) {
+    db.one('INSERT INTO Patient(registrationNumber, name, sex, DOB, city, region, ethnicity, lang) VALUES (${registrationNumber}, ${name}, ${sex}, ${DOB}, ${city}, ${region}, ${ethnicity}, ${lang} RETURNING registrationNumber', req.body)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function deletePatient(req, res, next) {
+    db.oneOrNone('DELETE FROM Patient WHERE registrationNumber=${registrationNumber} RETURNING registrationNumber', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })

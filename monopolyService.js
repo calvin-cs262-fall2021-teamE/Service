@@ -64,7 +64,7 @@ router.get("/visit/:id", readVisit);
 router.put("/visit/:id", updateVisit);
 router.post('/visits', createVisit);
 router.delete('/visits/:id', deleteVisit);
-router.get("/visits/:patient", readPatientVisits);
+router.get("/pVisits/:patient", readPatientVisits);
 
 
 // app.use

@@ -65,7 +65,7 @@ router.put("/visit/:id", updateVisit);
 router.post('/visits', createVisit);
 router.delete('/visits/:id', deleteVisit);
 router.get("/pVisits/:patient", readPatientVisits);
-router.get("/pVisits/:patient/:date", readPatientVisit);
+router.get("/pVisit/:patient/:visitDate", readPatientVisit);
 
 
 // app.use
@@ -317,7 +317,7 @@ function readPatientVisits(req, res, next) {
 }
 
 function readPatientVisit(req, res, next) {
-    db.oneOrNone('SELECT * FROM Visit WHERE patient=${patient} AND date=${date}', req.params)
+    db.oneOrNone('SELECT * FROM Visit WHERE patient=${patient} AND visitDate=${visitDate}', req.params)
     .then(data => {
         returnDataOr404(res, data);
     })

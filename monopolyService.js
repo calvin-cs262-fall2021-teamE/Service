@@ -59,6 +59,14 @@ router.get("/patient/:registrationNumber", readPatient);
 router.put("/patient/:registrationNumber", updatePatient);
 router.post('/patients', createPatient);
 router.delete('/patients/:registrationNumber', deletePatient);
+router.get("/visits", readVisits);
+router.get("/visit/:id", readVisit);
+router.put("/visit/:id", updateVisit);
+router.post('/visits', createVisit);
+router.delete('/visits/:id', deleteVisit);
+
+
+// app.use
 
 app.use(router);
 app.use(errorHandler);
@@ -245,3 +253,54 @@ function deletePatient(req, res, next) {
             next(err);
         });
 }
+
+function readVisits(req, res, next) {
+    db.many("SELECT * FROM VISIT")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+function readVisit(req, res, next) {
+    db.oneOrNone('SELECT * FROM Visit WHERE id=${id}', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function updateVisit(req, res, next) {
+    db.oneOrNone('UPDATE Visit SET visitDate=${body.visitDate}, patient=${body.patient}, doctor=${body.doctor}, student=${body.student}, primaryDiseases=${body.primaryDiseases}, secondaryDiseases=${body.secondaryDiseases}, dischargedDate=${body.dischargedDate}, notes=${body.notes}, WHERE id=${params.id} RETURNING id', req)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function createVisit(req, res, next) {
+    db.one('INSERT INTO Visit(visitDate, patient, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes) VALUES (${visitDate}, ${patient}, ${doctor}, ${student}, ${primaryDiseases}, ${secondaryDiseases}, ${dischargedDate}, ${notes} RETURNING id', req.body)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function deleteVisit(req, res, next) {
+    db.oneOrNone('DELETE FROM Visit WHERE id=${id} RETURNING id', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+

@@ -38,20 +38,6 @@ router.use(express.json());
 
 router.get("/", readHelloMessage);
 
-// Monopoly Service Routers
-
-router.get("/players", readPlayers);
-router.get("/players/:id", readPlayer);
-router.get("/playerScores", readPlayerScore);
-router.put("/players/:id", updatePlayer);
-router.post('/players', createPlayer);
-router.delete('/players/:id', deletePlayer);
-router.get("/games", readGames);
-router.get("/games/:id", readGame);
-router.put("/games/:id", updateGame);
-router.post('/games', createGame);
-router.delete('/games/:id', deleteGame);
-
 // OPUS Service Routers
 
 router.get("/patients", readPatients);
@@ -74,7 +60,7 @@ app.use(router);
 app.use(errorHandler);
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-// Implement the CRUD operations for the Monopoly Service.
+// Miscellaneous Functions
 
 function errorHandler(err, req, res) {
     if (app.get('env') === "development") {
@@ -92,116 +78,7 @@ function returnDataOr404(res, data) {
 }
 
 function readHelloMessage(req, res) {
-    res.send('Hello, CS 262 Monopoly service!');
-}
-
-function readPlayers(req, res, next) {
-    db.many("SELECT * FROM Player")
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            next(err);
-        })
-}
-
-function readPlayer(req, res, next) {
-    db.oneOrNone('SELECT * FROM Player WHERE id=${id}', req.params)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function readPlayerScore(req, res, next) {
-    db.many("SELECT Player.name, Player.ID, score FROM Player, PlayerGame, Game WHERE Player.ID = PlayerGame.playerID AND PlayerGame.gameID = Game.ID AND Game.ID = 2", req)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function updatePlayer(req, res, next) {
-    db.oneOrNone('UPDATE Player SET email=${body.email}, name=${body.name} WHERE id=${params.id} RETURNING id', req)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function createPlayer(req, res, next) {
-    db.one('INSERT INTO Player(email, name) VALUES (${email}, ${name}) RETURNING id', req.body)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function deletePlayer(req, res, next) {
-    db.oneOrNone('DELETE FROM Player WHERE id=${id} RETURNING id', req.params)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-function readGames(req, res, next) {
-    db.many("SELECT * FROM Game")
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            next(err);
-        })
-}
-
-function readGame(req, res, next) {
-    db.oneOrNone('SELECT * FROM Game WHERE id=${id}', req.params)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function updateGame(req, res, next) {
-    db.oneOrNone('UPDATE Game SET email=${body.email}, name=${body.name} WHERE id=${params.id} RETURNING id', req)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function createGame(req, res, next) {
-    db.one('INSERT INTO Game(email, name) VALUES (${email}, ${name}) RETURNING id', req.body)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            next(err);
-        });
-}
-
-function deleteGame(req, res, next) {
-    db.oneOrNone('DELETE FROM Game WHERE id=${id} RETURNING id', req.params)
-        .then(data => {
-            returnDataOr404(res, data);
-        })
-        .catch(err => {
-            next(err);
-        });
+    res.send('Hello, OPUS data service!');
 }
 
 // Implement the CRUD operations for OPUS Service

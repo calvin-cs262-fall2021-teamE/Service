@@ -14,7 +14,7 @@ CREATE TABLE Patient (
 	registrationNumber integer PRIMARY KEY, 
 	name varchar(50),
 	sex varchar(50),
-	DOB date,
+	DOB varchar(50),
 	city varchar(50),
 	region varchar(50),
 	ethnicity varchar(50),
@@ -29,7 +29,7 @@ CREATE TABLE Visit (
 	student varchar(50),
 	primaryDiseases varchar(50),
 	secondaryDiseases varchar(50),
-	dischargedDate date,
+	dischargedDate varchar(50),
 	Notes varchar(500)
 	);
 

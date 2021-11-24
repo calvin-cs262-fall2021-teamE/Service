@@ -25,11 +25,4 @@ const db = pgp({
     ssl: true,
 });
 
-// Send the SQL command directly to Postgres.
-db.many("SELECT * FROM Player")
-    .then(function (data) {
-        console.log(data);
-    })
-    .catch(function (error) {
-        console.log('ERROR:', error)
-    });
+

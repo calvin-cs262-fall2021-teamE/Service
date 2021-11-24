@@ -1,5 +1,5 @@
 /**
- * This module implements direct, Android-to-Postgres access to the Monopoly DB.
+ * This module implements direct, Android-to-Postgres access to the OPUS DB.
  * The database is hosted on ElephantSQL.
  *
  * Because the PGP connection variables are stored as Heroku config vars, store

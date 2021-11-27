@@ -114,10 +114,10 @@ function updatePatient(req, res, next) {
 }
 
 function createPatient(req, res, next) {
-    db.one('INSERT INTO Patient(registrationNumber, name, sex, DOB, city, region, ethnicity, lang) VALUES (${registrationNumber}, ${name}, ${sex}, ${DOB}, ${city}, ${region}, ${ethnicity}, ${lang}', req.body)
-//        .then(data => {
-//            res.send(data);
-//        })
+    db.one('INSERT INTO Patient(registrationNumber, name, sex, DOB, city, region, ethnicity, lang) VALUES (${registrationNumber}, ${name}, ${sex}, ${DOB}, ${city}, ${region}, ${ethnicity}, ${lang} RETURNING registrationNumber', req.body)
+        .then(data => {
+            res.send(data);
+        })
         .catch(err => {
             next(err);
         });

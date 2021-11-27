@@ -83,6 +83,7 @@ function readHelloMessage(req, res) {
 
 // Implement the CRUD operations for OPUS Service
 
+
 function readPatients(req, res, next) {
     db.many("SELECT * FROM Patient")
         .then(data => {
